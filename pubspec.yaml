@@ -22,8 +22,6 @@ environment:
 
 dependencies:
   flutter:
-    asset: 
-      - images/
     sdk: flutter
   firebase_core: "^0.7.0"
   firebase_database: "^6.0.0"
