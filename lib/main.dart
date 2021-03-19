@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:minathon/screens/wrapper.dart';
+import 'package:minathon/screens/regisScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
