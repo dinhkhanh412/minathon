@@ -5,6 +5,8 @@ import 'package:minathon/screens/regisScreen.dart';
 import 'package:flutter/material.dart';
 
 class Wrapper extends StatelessWidget {
+  static Route<Object> idScreen;
+
   @override
   Widget build(BuildContext context) {
     // return either the Home or Authenticate widget
