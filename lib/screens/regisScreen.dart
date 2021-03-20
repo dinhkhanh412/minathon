@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:minathon/main.dart';
 import 'package:minathon/screens/loginScreen.dart';
-import 'package:minathon/screens/wrapper.dart';
 
 // ignore: must_be_immutable
 class RegisScreen extends StatelessWidget {
@@ -168,7 +167,9 @@ class RegisScreen extends StatelessWidget {
         "phone": phoneTextEditingController.text.trim(),
       };
       userRef.child(user.uid).set(userDataMap);
-      displayToastMessage("Success create", context);
+      displayToastMessage("Success create, login to continue", context);
+      Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
     } else {
       displayToastMessage('Cannot create user', context);
     }
