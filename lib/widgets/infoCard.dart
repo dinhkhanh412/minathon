@@ -22,7 +22,7 @@ class InfoCard extends StatelessWidget {
       @required this.newData,
       @required this.percentChange,
       this.icon,
-      this.cardColor = CardColors.green,
+      @required this.cardColor,
       @required this.color})
       : super(key: key);
   @override
@@ -141,7 +141,7 @@ class InfoCard extends StatelessWidget {
           alignment: Alignment.bottomRight,
           child: Column(
             children: <Widget>[
-              const YMargin(115),
+              const YMargin(80),
               Container(
                 width: 58,
                 height: 58,
