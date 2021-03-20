@@ -70,9 +70,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        if (emailTextEditingController.text == null) {
+                        if (emailTextEditingController.text.isEmpty) {
                           displayToastMessage("Fill Email", context);
-                        } else if (passwordTextEditingController.text == null) {
+                        } else if (passwordTextEditingController.text.isEmpty) {
                           displayToastMessage("Fill Password", context);
                         } else
                           loginAndAuthenticateUser(context);
