@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatelessWidget {
   TextEditingController emailTextEditingController = TextEditingController();
@@ -17,10 +18,10 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 35.0,
               ),
-              Image(
-                image: AssetImage("logo.png"),
-                alignment: Alignment.center,
-              ),
+              // Image(
+              //   image: AssetImage("logo.png"),
+              //   alignment: Alignment.center,
+              // ),
               SizedBox(
                 height: 1.0,
               ),
@@ -42,8 +43,7 @@ class LoginScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: "Email",
                           labelStyle: TextStyle(fontSize: 14),
-                          hintStyle:
-                              TextStyle(fontSize: 10, color: Colors.grey),
+                          hintStyle: TextStyle(fontSize: 10, color: Colors.grey),
                         )),
                     SizedBox(
                       height: 1.0,
@@ -54,8 +54,7 @@ class LoginScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: "Password",
                           labelStyle: TextStyle(fontSize: 14),
-                          hintStyle:
-                              TextStyle(fontSize: 10, color: Colors.grey),
+                          hintStyle: TextStyle(fontSize: 10, color: Colors.grey),
                         )),
                     SizedBox(
                       height: 20.0,
@@ -66,13 +65,17 @@ class LoginScreen extends StatelessWidget {
                         child: Center(
                           child: Text(
                             'Login',
-                            style: TextStyle(
-                                fontSize: 18.0, fontFamily: "Brand Bold"),
+                            style: TextStyle(fontSize: 18.0, fontFamily: "Brand Bold"),
                           ),
                         ),
                       ),
                       onPressed: () {
-                        loginAndAuthenticateUser(context);
+                        if (emailTextEditingController.text == null) {
+                          displayToastMessage("Fill Email", context);
+                        } else if (passwordTextEditingController.text == null) {
+                          displayToastMessage("Fill Password", context);
+                        } else
+                          loginAndAuthenticateUser(context);
                       },
                     ),
                   ],
@@ -88,8 +91,7 @@ class LoginScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   void loginAndAuthenticateUser(BuildContext context) async {
     final User user = (await _auth.signInWithEmailAndPassword(
-            email: emailTextEditingController.text,
-            password: passwordTextEditingController.text))
+            email: emailTextEditingController.text, password: passwordTextEditingController.text))
         .user;
     if (user != null) {
       print("Successfull");
@@ -97,4 +99,8 @@ class LoginScreen extends StatelessWidget {
       print("Ngu");
     }
   }
+}
+
+displayToastMessage(String message, BuildContext context) {
+  Fluttertoast.showToast(msg: message);
 }

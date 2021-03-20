@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:minathon/main.dart';
+import 'package:minathon/screens/loginScreen.dart';
 import 'package:minathon/screens/wrapper.dart';
 
 // ignore: must_be_immutable
@@ -26,12 +27,12 @@ class RegisScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Image(
-                image: AssetImage("images/logo.png"),
-                width: 390,
-                height: 250,
-                alignment: Alignment.center,
-              ),
+              // Image(
+              //   image: AssetImage("images/logo.png"),
+              //   width: 390,
+              //   height: 250,
+              //   alignment: Alignment.center,
+              // ),
               SizedBox(
                 height: 20,
               ),
@@ -133,7 +134,10 @@ class RegisScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         var idScreen;
-                        Navigator.pushAndRemoveUntil(context, Wrapper.idScreen, (route) => false);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                            (route) => false);
                       },
                       child: Text("Already have account"),
                     )
