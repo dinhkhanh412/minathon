@@ -17,7 +17,7 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20.0),
         child:Column(
           children: [
           SizedBox(height:40),
@@ -49,8 +49,8 @@ class PostScreen extends StatelessWidget {
             labelText:"Trend Name",
             labelStyle:TextStyle(
               fontSize: 14,
-              color:Colors.black
-
+              color: Colors.grey[400]
+              
             ),
             border:OutlineInputBorder(),
             hintText:"Không làm mà đòi có ăn",
@@ -59,6 +59,7 @@ class PostScreen extends StatelessWidget {
           maxLength:20,
         ),
         TextField(
+          
           controller:_descriptionController,
           decoration:InputDecoration(
             enabledBorder: OutlineInputBorder(
@@ -87,7 +88,7 @@ class PostScreen extends StatelessWidget {
             labelText:"Source",
             labelStyle:TextStyle(
               fontSize: 14,
-              color:Colors.black
+              color: Colors.grey[400]
 
             ),
             border:OutlineInputBorder(),
