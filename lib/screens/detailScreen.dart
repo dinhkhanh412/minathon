@@ -8,6 +8,18 @@ import 'package:hexcolor/hexcolor.dart';
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class DetailScreen extends StatelessWidget {
+  final String name;
+  final String descript;
+  final String trendID;
+  final String imageLink;
+  final int vote;
+  DetailScreen({
+    this.name,
+    this.descript,
+    this.trendID,
+    this.imageLink,
+    this.vote,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +34,9 @@ class DetailScreen extends StatelessWidget {
                 color: HexColor("#343a40"),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  colorFilter: new ColorFilter.mode(
-                      Colors.black.withOpacity(0.1), BlendMode.dstATop),
-                  image: NetworkImage(
-                      'https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/amee_tbdk.jpg?alt=media&token=d91da307-0273-45cd-858e-8c8db9973fa4'),
+                  colorFilter:
+                      new ColorFilter.mode(Colors.black.withOpacity(0.1), BlendMode.dstATop),
+                  image: NetworkImage(this.imageLink),
                 )),
             child: Column(children: <Widget>[
               Stack(
@@ -54,11 +65,10 @@ class DetailScreen extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.all(50.0),
                   child: Text(
-                    "Đưa tay đây nào mãi bên nhau bạn nhé",
+                    this.name,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                            fontSize: 30, color: HexColor("#edf2f4"))),
+                        textStyle: TextStyle(fontSize: 30, color: HexColor("#edf2f4"))),
                   )),
               Padding(
                 padding: EdgeInsets.all(15.0),
@@ -70,14 +80,10 @@ class DetailScreen extends StatelessWidget {
                   percent: 0.9,
                   leading: new Text("Rate:   ",
                       style: TextStyle(
-                          color: HexColor("#0466c8"),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
+                          color: HexColor("#0466c8"), fontSize: 16, fontWeight: FontWeight.bold)),
                   center: Text("90.0%",
                       style: TextStyle(
-                          color: HexColor("#1d3557"),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
+                          color: HexColor("#1d3557"), fontSize: 16, fontWeight: FontWeight.bold)),
                   linearStrokeCap: LinearStrokeCap.roundAll,
                   progressColor: HexColor("#a8dadc"),
                 ),
@@ -88,7 +94,7 @@ class DetailScreen extends StatelessWidget {
           Padding(
               padding: EdgeInsets.all(50.0),
               child: Text(
-                "Câu nói tạo nên trend mãi bên nhau bạn nhé chính là một câu hát lời Việt được các bạn trẻ viết lại trên nền nhạc ca khúc Wip Wup của Thái Lan. Một đoạn nhạc ngắn trong bài hát này được cải biên lại với tiết tấu sôi động và cuốn hút hơn. Với các bạn thường xuyên lướt Tik Tok chắc hẳn không ít lần nghe thấy đoạn nhạc này và nhún nhảy theo nó.",
+                this.descript,
                 style: GoogleFonts.lato(
                     textStyle: TextStyle(
                   fontSize: 18,

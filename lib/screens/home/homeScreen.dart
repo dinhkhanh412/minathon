@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:minathon/screens/loginScreen.dart';
 
@@ -12,30 +13,41 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
 
 final databaseReference = FirebaseDatabase.instance.reference();
+final _trendRef = databaseReference.child('trendList');
 
 class Trend {
   final String name;
-  final String decript;
+  final String descript;
   final String trendID;
   final String imageLink;
   final int vote;
 
   Trend({
     this.name,
-    this.decript,
+    this.descript,
     this.trendID,
     this.imageLink,
     this.vote,
   });
 }
 
-List trendList;
+class RecipeTrendList {
+  List<Trend> recipeList;
+
+  RecipeTrendList({this.recipeList});
+  factory RecipeTrendList.fromJSON(Map<dynamic, dynamic> json) {
+    return RecipeTrendList(recipeList: parserecipes(json));
+  }
+  static List<Trend> parserecipes(recipeJSON) {
+    var rList = recipeJSON['browseRecipes'] as List;
+  }
+}
 
 void updateData() {
   databaseReference.child('trendList').update({
     '1': {
       "name": "Huấn",
-      "decript": "Không làm đòi có ăn",
+      "descript": "Không làm đòi có ăn",
       "trendID": "123",
       "imageLink": "http://www.allwhitebackground.com/images/2/2582-190x190.jpg",
       "vote": 50
@@ -46,6 +58,8 @@ void updateData() {
 readData() async {
   await databaseReference.once().then((DataSnapshot snapshot) {
     //print(snapshot.value['trendList']);
+    // var a = json.decode(snapshot.value);
+    // print(a);
     return snapshot.value['trendList'];
   });
 }
@@ -60,56 +74,37 @@ getMethod() async {
 void createData() {
   databaseReference.child("trendList").set([
     {
-      "name": "Huấn",
-      "decript": "Không làm đòi có ăn",
+      "name": "Đưa tay đây nào, mãi bên nhau bạn nhé",
+      "descript":
+          "Câu nói tạo nên trend mãi bên nhau bạn nhé chính là một câu hát lời Việt được các bạn trẻ viết lại trên nền nhạc ca khúc Wip Wup của Thái Lan. Một đoạn nhạc ngắn trong bài hát này được cải biên lại với tiết tấu sôi động và cuốn hút hơn. Với các bạn thường xuyên lướt Tik Tok chắc hẳn không ít lần nghe thấy đoạn nhạc này và nhún nhảy theo nó.",
       "trendID": "123",
-      "imageLink": "http://www.allwhitebackground.com/images/2/2582-190x190.jpg",
+      "imageLink": [
+        "https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/amee_tbdk.jpg?alt=media&token=d91da307-0273-45cd-858e-8c8db9973fa4",
+        "https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/unnamed.jpg?alt=media&token=544cbda4-61a6-49a9-bf73-841acc4491e9"
+      ],
       "vote": 50
     },
     {
       "name": "Huấn",
-      "decript": "Không làm đòi có ăn",
-      "trendID": "123",
-      "imageLink": "http://www.allwhitebackground.com/images/2/2582-190x190.jpg",
+      "descript": "Không làm đòi có ăn",
+      "trendID": "124",
+      "imageLink": "[http://www.allwhitebackground.com/images/2/2582-190x190.jpg]",
       "vote": 50
     },
     {
       "name": "Huấn",
-      "decript": "Không làm đòi có ăn",
-      "trendID": "123",
-      "imageLink": "http://www.allwhitebackground.com/images/2/2582-190x190.jpg",
+      "descript": "Không làm đòi có ăn",
+      "trendID": "125",
+      "imageLink": "[http://www.allwhitebackground.com/images/2/2582-190x190.jpg]",
       "vote": 50
     }
   ]);
-}
-
-Widget futureBuilder() {
-  return FutureBuilder<dynamic>(
-    future: databaseReference.once(),
-    builder: (context, snapshot) {
-      debugPrint('Builder');
-      switch (snapshot.connectionState) {
-        case ConnectionState.done:
-          if (snapshot.hasError)
-            return new Text('Error: ${snapshot.error}');
-          else
-            return buildDic(context, 1, trendList);
-          break;
-
-        default:
-          debugPrint("Snapshot " + snapshot.toString());
-          return Container(); // also check your listWidget(snapshot) as it may return null.
-      }
-    },
-  );
 }
 
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
-
-final Future<FirebaseApp> _future = Firebase.initializeApp();
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
@@ -124,68 +119,101 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  List<Widget> _widgetOptions = <Widget>[
-    FutureBuilder(
-      future: _future,
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (trendList != null) {
-          return ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: trendList.length,
-            itemBuilder: (context, index) {
-              return buildDic(context, index, trendList);
-            },
-          );
-        }
+  // List<Widget> _widgetOptions = <Widget>[
+  //   FutureBuilder(
+  //     future: _future,
+  //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+  //       if (trendList != null) {
+  //         return ListView.builder(
+  //           physics: NeverScrollableScrollPhysics(),
+  //           itemCount: trendList.length,
+  //           itemBuilder: (context, index) {
+  //             return buildDic(context, index, trendList);
+  //           },
+  //         );
+  //       }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        trendList = snapshot.data;
-        return ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: trendList.length,
-          itemBuilder: (context, index) {
-            return buildDic(context, index, trendList);
-          },
-        );
-      },
-    ),
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       }
+  //       trendList = snapshot.data;
+  //       return ListView.builder(
+  //         physics: NeverScrollableScrollPhysics(),
+  //         itemCount: trendList.length,
+  //         itemBuilder: (context, index) {
+  //           return buildDic(context, index, trendList);
+  //         },
+  //       );
+  //     },
+  //   ),
 
-    // FutureBuilder(builder: builder),
-    Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 50),
-            InfoCard(
-                name: "Bug",
-                decript: "Khônh làm mà đòi có ăn",
-                trendID: "123",
-                imageLink: 'http://www.allwhitebackground.com/images/2/2582-190x190.jpg',
-                vote: 50),
-          ],
-        ),
-      ),
-    ),
-  ];
+  //   // FutureBuilder(builder: builder),
+  //   Scaffold(
+  //     body: SingleChildScrollView(
+  //       child: Column(
+  //         children: [
+  //           SizedBox(height: 50),
+  //           InfoCard(
+  //               name: "Bug",
+  //               decript: "Khônh làm mà đòi có ăn",
+  //               trendID: "123",
+  //               imageLink: 'http://www.allwhitebackground.com/images/2/2582-190x190.jpg',
+  //               vote: 50),
+  //         ],
+  //       ),
+  //     ),
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-          future: readData(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasError) {
-              print('errro');
-              return Text(snapshot.error.toString());
-            } else {
-              print(snapshot.data);
-            }
-            return Container();
-          }),
+      body: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              child: TextField(
+                // controller: TextEditingController(text: locations[0]),
+                cursorColor: Theme.of(context).primaryColor,
+                style: TextStyle(color: Colors.black, fontSize: 18),
+                decoration: InputDecoration(
+                    hintText: "Search",
+                    hintStyle: TextStyle(color: Colors.black38, fontSize: 16),
+                    prefixIcon: Material(
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      child: Icon(Icons.search),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+              ),
+            ),
+          ),
+          Flexible(
+            child: new FirebaseAnimatedList(
+                shrinkWrap: true,
+                query: _trendRef,
+                itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+                  return new InfoCard(
+                      name: snapshot.value['name'],
+                      descript: snapshot.value['descript'],
+                      trendID: snapshot.value['trendID'],
+                      imageLink: snapshot.value['imageLink'],
+                      vote: snapshot.value['vote']);
+                }),
+          ),
+        ],
+      ),
+
       // child: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
