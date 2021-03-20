@@ -8,14 +8,14 @@ class InfoCard extends StatelessWidget {
   final String name;
   final String descript;
   final String trendID;
-  final imageLink;
+  final String coverImg;
   final int vote;
   const InfoCard({
     Key key,
     @required this.name,
     @required this.descript,
     @required this.trendID,
-    @required this.imageLink,
+    @required this.coverImg,
     @required this.vote,
   }) : super(key: key);
 
@@ -38,20 +38,24 @@ class InfoCard extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.25,
-            child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  this.name,
-                  style: GoogleFonts.lato(fontSize: 30, color: HexColor("#f8f9fa")),
-                  textAlign: TextAlign.justify,
-                )),
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      this.name,
+                      style: GoogleFonts.lato(
+                          fontSize: 30, color: HexColor("#f8f9fa")),
+                      textAlign: TextAlign.center,
+                    ))),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.red,
               image: DecorationImage(
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(fillColor.withOpacity(0.9), BlendMode.srcOver),
-                image: NetworkImage(imageLink),
+                colorFilter: ColorFilter.mode(
+                    fillColor.withOpacity(0.9), BlendMode.srcOver),
+                image: NetworkImage(this.coverImg),
               ),
             ),
           )),

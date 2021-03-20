@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minathon/screens/home/homeScreen.dart';
+import 'package:minathon/screens/loginScreen.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -11,12 +14,14 @@ class DetailScreen extends StatelessWidget {
   final String name;
   final String descript;
   final String trendID;
-  final String imageLink;
+  final String coverImg;
+  final imageLink;
   final int vote;
   DetailScreen({
     this.name,
     this.descript,
     this.trendID,
+    this.coverImg,
     this.imageLink,
     this.vote,
   });
@@ -34,9 +39,9 @@ class DetailScreen extends StatelessWidget {
                 color: HexColor("#343a40"),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  colorFilter:
-                      new ColorFilter.mode(Colors.black.withOpacity(0.1), BlendMode.dstATop),
-                  image: NetworkImage(this.imageLink),
+                  colorFilter: new ColorFilter.mode(
+                      Colors.black.withOpacity(0.1), BlendMode.dstATop),
+                  image: NetworkImage(this.coverImg),
                 )),
             child: Column(children: <Widget>[
               Stack(
@@ -46,7 +51,12 @@ class DetailScreen extends StatelessWidget {
                     child: IconButton(
                       icon: const Icon(Icons.clear, size: 40),
                       color: HexColor("#0081a7"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
+                      },
                     ),
                   ),
                   Align(
@@ -68,7 +78,8 @@ class DetailScreen extends StatelessWidget {
                     this.name,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.lato(
-                        textStyle: TextStyle(fontSize: 30, color: HexColor("#edf2f4"))),
+                        textStyle: TextStyle(
+                            fontSize: 30, color: HexColor("#edf2f4"))),
                   )),
               Padding(
                 padding: EdgeInsets.all(15.0),
@@ -80,10 +91,14 @@ class DetailScreen extends StatelessWidget {
                   percent: 0.9,
                   leading: new Text("Rate:   ",
                       style: TextStyle(
-                          color: HexColor("#0466c8"), fontSize: 16, fontWeight: FontWeight.bold)),
+                          color: HexColor("#0466c8"),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
                   center: Text("90.0%",
                       style: TextStyle(
-                          color: HexColor("#1d3557"), fontSize: 16, fontWeight: FontWeight.bold)),
+                          color: HexColor("#1d3557"),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
                   linearStrokeCap: LinearStrokeCap.roundAll,
                   progressColor: HexColor("#a8dadc"),
                 ),
@@ -105,8 +120,7 @@ class DetailScreen extends StatelessWidget {
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 50),
               child: Image(
-                image: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/amee_tbdk.jpg?alt=media&token=d91da307-0273-45cd-858e-8c8db9973fa4'),
+                image: NetworkImage(this.imageLink[0]),
               )),
         ])
 
