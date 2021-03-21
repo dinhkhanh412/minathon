@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:minathon/screens/home/homeScreen.dart';
+
 class LoginScreen extends StatelessWidget {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
@@ -92,10 +94,17 @@ class LoginScreen extends StatelessWidget {
     final User user = (await _auth.signInWithEmailAndPassword(
             email: emailTextEditingController.text, password: passwordTextEditingController.text))
         .user;
-    if (user != null) {
-      print("Successfull");
-    } else {
-      print("Ngu");
+    if (user != null)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return HomeScreen(UID: user.uid);
+          },
+        ),
+      );
+    else {
+      displayToastMessage("Wrong info, please try agian", context);
     }
   }
 }

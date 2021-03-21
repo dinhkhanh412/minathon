@@ -13,39 +13,10 @@ import 'package:minathon/screens/postScreen.dart';
 import 'package:minathon/widgets/infoCard.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
+import 'package:responsive_screen/responsive_screen.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 final _trendRef = databaseReference.child('trendList');
-
-class Trend {
-  final String name;
-  final String descript;
-  final String trendID;
-  final String coverImg;
-  final imageLink;
-  final int vote;
-
-  Trend({
-    this.name,
-    this.descript,
-    this.trendID,
-    this.coverImg,
-    this.imageLink,
-    this.vote,
-  });
-}
-
-class RecipeTrendList {
-  List<Trend> recipeList;
-
-  RecipeTrendList({this.recipeList});
-  factory RecipeTrendList.fromJSON(Map<dynamic, dynamic> json) {
-    return RecipeTrendList(recipeList: parserecipes(json));
-  }
-  static List<Trend> parserecipes(recipeJSON) {
-    var rList = recipeJSON['browseRecipes'] as List;
-  }
-}
 
 void updateData() {
   databaseReference.child('trendList').update({
@@ -57,22 +28,6 @@ void updateData() {
       "vote": 50
     }
   });
-}
-
-readData() async {
-  await databaseReference.once().then((DataSnapshot snapshot) {
-    //print(snapshot.value['trendList']);
-    // var a = json.decode(snapshot.value);
-    // print(a);
-    return snapshot.value['trendList'];
-  });
-}
-
-getMethod() async {
-  String url = "https://phuidatabase.000webhostapp.com/getProjectData.php";
-  var res = await http.get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
-  var body = json.decode(res.body);
-  return body;
 }
 
 void createData() {
@@ -117,13 +72,15 @@ void createData() {
 }
 
 class HomeScreen extends StatefulWidget {
+  final String UID;
+  HomeScreen({Key key, this.UID}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  //String userID = null;
   bool login = true;
 
   void _onItemTapped(int index) {
@@ -133,53 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // List<Widget> _widgetOptions = <Widget>[
-  //   FutureBuilder(
-  //     future: _future,
-  //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-  //       if (trendList != null) {
-  //         return ListView.builder(
-  //           physics: NeverScrollableScrollPhysics(),
-  //           itemCount: trendList.length,
-  //           itemBuilder: (context, index) {
-  //             return buildDic(context, index, trendList);
-  //           },
-  //         );
-  //       }
-
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       }
-  //       trendList = snapshot.data;
-  //       return ListView.builder(
-  //         physics: NeverScrollableScrollPhysics(),
-  //         itemCount: trendList.length,
-  //         itemBuilder: (context, index) {
-  //           return buildDic(context, index, trendList);
-  //         },
-  //       );
-  //     },
-  //   ),
-
-  //   // FutureBuilder(builder: builder),
-  //   Scaffold(
-  //     body: SingleChildScrollView(
-  //       child: Column(
-  //         children: [
-  //           SizedBox(height: 50),
-  //           InfoCard(
-  //               name: "Bug",
-  //               decript: "Khônh làm mà đòi có ăn",
-  //               trendID: "123",
-  //               imageLink: 'http://www.allwhitebackground.com/images/2/2582-190x190.jpg',
-  //               vote: 50),
-  //         ],
-  //       ),
-  //     ),
-  //   ),
-  // ];
+  loginButton() {}
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +171,11 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Visibility(
         child: FloatingActionButton(
           onPressed: () async {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PostScreen()));
+            if (widget.UID == null)
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+            else
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => PostScreen(UID: widget.UID)));
           },
           tooltip: 'Add trend',
           child: const Icon(Icons.add),
@@ -270,25 +185,4 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-}
-
-Widget buildDic(BuildContext context, int index, List dicList) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    },
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.25,
-      child: Text(dicList[index]['name'], style: Theme.of(context).textTheme.headline1),
-      decoration: BoxDecoration(
-        color: const Color(0xff7c94b6),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
-          image: NetworkImage(dicList[index]['coverImg']),
-        ),
-      ),
-    ),
-  );
 }

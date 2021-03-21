@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'home/homeScreen.dart';
 
 class PostScreen extends StatelessWidget {
+  final String UID;
+  PostScreen({Key key, this.UID}) : super(key: key);
+
   String _name;
   String _description;
   List<String> _img;
@@ -24,7 +27,8 @@ class PostScreen extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomeScreen(UID: this.UID)));
             },
           ),
         ),

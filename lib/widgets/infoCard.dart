@@ -44,8 +44,7 @@ class InfoCard extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       this.name,
-                      style: GoogleFonts.lato(
-                          fontSize: 30, color: HexColor("#f8f9fa")),
+                      style: GoogleFonts.lato(fontSize: 30, color: HexColor("#f8f9fa")),
                       textAlign: TextAlign.center,
                     ))),
             decoration: BoxDecoration(
@@ -53,8 +52,7 @@ class InfoCard extends StatelessWidget {
               color: Colors.red,
               image: DecorationImage(
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    fillColor.withOpacity(0.9), BlendMode.srcOver),
+                colorFilter: ColorFilter.mode(fillColor.withOpacity(0.8), BlendMode.srcOver),
                 image: NetworkImage(this.coverImg),
               ),
             ),

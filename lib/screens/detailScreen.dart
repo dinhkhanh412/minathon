@@ -8,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 // import 'package:flutter_smart_course/src/pages/home_page.dart';
 // import 'package:flutter_smart_course/src/theme/theme.dart';
+
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class DetailScreen extends StatelessWidget {
@@ -33,14 +34,14 @@ class DetailScreen extends StatelessWidget {
                 child: Column(
       children: <Widget>[
         Container(
-            height: 300,
+            height: 330,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: HexColor("#343a40"),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  colorFilter: new ColorFilter.mode(
-                      Colors.black.withOpacity(0.1), BlendMode.dstATop),
+                  colorFilter:
+                      new ColorFilter.mode(Colors.black.withOpacity(0.1), BlendMode.dstATop),
                   image: NetworkImage(this.coverImg),
                 )),
             child: Column(children: <Widget>[
@@ -53,9 +54,7 @@ class DetailScreen extends StatelessWidget {
                       color: HexColor("#0081a7"),
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                            context, MaterialPageRoute(builder: (context) => HomeScreen()));
                       },
                     ),
                   ),
@@ -78,8 +77,7 @@ class DetailScreen extends StatelessWidget {
                     this.name,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                            fontSize: 30, color: HexColor("#edf2f4"))),
+                        textStyle: TextStyle(fontSize: 30, color: HexColor("#edf2f4"))),
                   )),
               Padding(
                 padding: EdgeInsets.all(15.0),
@@ -88,19 +86,15 @@ class DetailScreen extends StatelessWidget {
                   animation: true,
                   lineHeight: 20.0,
                   animationDuration: 2000,
-                  percent: 0.9,
+                  percent: 90 / (90 + 20),
                   leading: new Text("Rate:   ",
                       style: TextStyle(
-                          color: HexColor("#0466c8"),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
+                          color: HexColor("#0466c8"), fontSize: 16, fontWeight: FontWeight.bold)),
                   center: Text("90.0%",
                       style: TextStyle(
-                          color: HexColor("#1d3557"),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
+                          color: HexColor("#1d3557"), fontSize: 16, fontWeight: FontWeight.bold)),
                   linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: HexColor("#a8dadc"),
+                  progressColor: Colors.green,
                 ),
               ),
             ])),
