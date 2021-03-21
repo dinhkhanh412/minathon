@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:minathon/screens/home/homeScreen.dart';
+import 'package:minathon/screens/regisScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   TextEditingController emailTextEditingController = TextEditingController();
@@ -79,6 +80,18 @@ class LoginScreen extends StatelessWidget {
                           loginAndAuthenticateUser(context);
                       },
                     ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return RegisScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text('Create account')),
                   ],
                 ),
               ),

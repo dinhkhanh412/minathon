@@ -22,11 +22,14 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List colors = [
-      HexColor("#cb2924"),
+      HexColor("#b7b7a4"),
       HexColor("#d49068"),
       HexColor("#888b90"),
       HexColor("#5a8c83"),
-      HexColor("#8da9d0")
+      HexColor("#8da9d0"),
+      HexColor("#31572c"),
+      HexColor('#6d597a'),
+      HexColor('#5a189a')
     ];
     var fillColor = colors[(new Random()).nextInt(colors.length)];
     return Column(children: [

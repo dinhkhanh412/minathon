@@ -6,20 +6,18 @@ import 'package:minathon/screens/loginScreen.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-// import 'package:flutter_smart_course/src/pages/home_page.dart';
-// import 'package:flutter_smart_course/src/theme/theme.dart';
-
-enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
-
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final String name;
   final String descript;
   final String trendID;
   final String coverImg;
   final imageLink;
   final int vote;
-  final int like;
-  final int dislike;
+  int like;
+  int dislike;
+  final likeList;
+  final dislikeList;
+  final String UID;
   DetailScreen(
       {this.name,
       this.descript,
@@ -28,7 +26,26 @@ class DetailScreen extends StatelessWidget {
       this.imageLink,
       this.vote,
       this.like,
-      this.dislike});
+      this.dislike,
+      this.likeList,
+      this.dislikeList,
+      this.UID});
+
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  void clickLikeButton() {
+    if (widget.UID == null)
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    else {
+      setState(() {
+        widget.like = widget.like + 1;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +62,7 @@ class DetailScreen extends StatelessWidget {
                   fit: BoxFit.cover,
                   colorFilter:
                       new ColorFilter.mode(Colors.black.withOpacity(0.1), BlendMode.dstATop),
-                  image: NetworkImage(this.coverImg),
+                  image: NetworkImage(widget.coverImg),
                 )),
             child: Column(children: <Widget>[
               Stack(
@@ -77,7 +94,7 @@ class DetailScreen extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.all(50.0),
                   child: Text(
-                    this.name,
+                    widget.name,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.lato(
                         textStyle: TextStyle(fontSize: 30, color: HexColor("#edf2f4"))),
@@ -89,11 +106,12 @@ class DetailScreen extends StatelessWidget {
                   animation: true,
                   lineHeight: 20.0,
                   animationDuration: 2000,
-                  percent: like / (like + dislike),
+                  percent: widget.like / (widget.like + widget.dislike),
                   leading: new Text("Rate:   ",
                       style: TextStyle(
                           color: HexColor("#0466c8"), fontSize: 16, fontWeight: FontWeight.bold)),
-                  center: Text((like / (like + dislike) * 100).toStringAsFixed(2),
+                  center: Text(
+                      (widget.like / (widget.like + widget.dislike) * 100).toStringAsFixed(2),
                       style: TextStyle(
                           color: HexColor("#1d3557"), fontSize: 16, fontWeight: FontWeight.bold)),
                   linearStrokeCap: LinearStrokeCap.roundAll,
@@ -106,7 +124,7 @@ class DetailScreen extends StatelessWidget {
           Padding(
               padding: EdgeInsets.all(50.0),
               child: Text(
-                this.descript,
+                widget.descript,
                 style: GoogleFonts.lato(
                     textStyle: TextStyle(
                   fontSize: 18,
@@ -117,7 +135,7 @@ class DetailScreen extends StatelessWidget {
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 50),
               child: Image(
-                image: NetworkImage(this.imageLink[0]),
+                image: NetworkImage(widget.imageLink[0]),
               )),
         ])
 
@@ -134,9 +152,11 @@ class DetailScreen extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.thumb_up),
                       color: HexColor("#0081a7"),
-                      onPressed: () {},
+                      onPressed: () {
+                        clickLikeButton();
+                      },
                     ),
-                    Text(like.toString()),
+                    Text(widget.like.toString()),
                   ]),
                 ),
                 Align(
@@ -145,7 +165,7 @@ class DetailScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.55,
                     ),
-                    Text(dislike.toString()),
+                    Text(widget.dislike.toString()),
                     IconButton(
                       icon: const Icon(Icons.thumb_down),
                       color: HexColor("#0081a7"),

@@ -142,6 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       vote: snapshot.value['vote'],
                                       like: snapshot.value['like'],
                                       dislike: snapshot.value['dislike'],
+                                      likeList: snapshot.value['likeList'],
+                                      dislikeList: snapshot.value['dislikeList'],
+                                      UID: widget.UID,
                                     )));
                       },
                       child: InfoCard(
