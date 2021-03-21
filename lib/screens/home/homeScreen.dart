@@ -6,6 +6,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:minathon/screens/detailScreen.dart';
 import 'package:minathon/screens/loginScreen.dart';
+import 'package:minathon/screens/postScreen.dart';
 
 // import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -52,8 +53,7 @@ void updateData() {
       "name": "Huấn",
       "descript": "Không làm đòi có ăn",
       "trendID": "123",
-      "imageLink":
-          "http://www.allwhitebackground.com/images/2/2582-190x190.jpg",
+      "imageLink": "http://www.allwhitebackground.com/images/2/2582-190x190.jpg",
       "vote": 50
     }
   });
@@ -70,8 +70,7 @@ readData() async {
 
 getMethod() async {
   String url = "https://phuidatabase.000webhostapp.com/getProjectData.php";
-  var res = await http
-      .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+  var res = await http.get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
   var body = json.decode(res.body);
   return body;
 }
@@ -88,7 +87,8 @@ void createData() {
       "imageLink": [
         "https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/unnamed.jpg?alt=media&token=544cbda4-61a6-49a9-bf73-841acc4491e9"
       ],
-      "vote": 50
+      "like": 90,
+      "dislike": 10
     },
     {
       "name": "Huấn",
@@ -98,7 +98,8 @@ void createData() {
       "imageLink": [
         "https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/unnamed.jpg?alt=media&token=544cbda4-61a6-49a9-bf73-841acc4491e9"
       ],
-      "vote": 50
+      "like": 90,
+      "dislike": 10
     },
     {
       "name": "Huấn",
@@ -109,7 +110,8 @@ void createData() {
       "imageLink": [
         "https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/unnamed.jpg?alt=media&token=544cbda4-61a6-49a9-bf73-841acc4491e9"
       ],
-      "vote": 50
+      "like": 90,
+      "dislike": 10
     }
   ]);
 }
@@ -126,7 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      print("a");
       //createData();
       //_selectedIndex = index;
     });
@@ -194,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
               elevation: 5.0,
               borderRadius: BorderRadius.all(Radius.circular(30)),
               child: TextField(
-                // controller: TextEditingController(text: locations[0]),
+                // controller: TextEditingController( text: locations[0]),
                 cursorColor: Theme.of(context).primaryColor,
                 style: TextStyle(color: Colors.black, fontSize: 18),
                 decoration: InputDecoration(
@@ -206,8 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Icon(Icons.search),
                     ),
                     border: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
               ),
             ),
           ),
@@ -260,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Visibility(
         child: FloatingActionButton(
           onPressed: () async {
-            await createData();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PostScreen()));
           },
           tooltip: 'Add trend',
           child: const Icon(Icons.add),
@@ -275,20 +275,17 @@ class _HomeScreenState extends State<HomeScreen> {
 Widget buildDic(BuildContext context, int index, List dicList) {
   return GestureDetector(
     onTap: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
     },
     child: Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.25,
-      child: Text(dicList[index]['name'],
-          style: Theme.of(context).textTheme.headline1),
+      child: Text(dicList[index]['name'], style: Theme.of(context).textTheme.headline1),
       decoration: BoxDecoration(
         color: const Color(0xff7c94b6),
         image: DecorationImage(
           fit: BoxFit.cover,
-          colorFilter: new ColorFilter.mode(
-              Colors.black.withOpacity(0.2), BlendMode.dstATop),
+          colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
           image: NetworkImage(dicList[index]['coverImg']),
         ),
       ),
