@@ -20,17 +20,11 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 35.0,
               ),
-              // Image(
-              //   image: AssetImage("logo.png"),
-              //   alignment: Alignment.center,
-              // ),
+              Image(
+                  image: NetworkImage(
+                      'https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/logo.png?alt=media&token=cbb56374-d04e-4e3a-9c22-325a4fc47675')),
               SizedBox(
-                height: 1.0,
-              ),
-              Text(
-                'Login as ...',
-                style: TextStyle(fontFamily: "Brand Bold", fontSize: 24),
-                textAlign: TextAlign.center,
+                height: 20.0,
               ),
               Padding(
                 padding: EdgeInsets.all(20.0),

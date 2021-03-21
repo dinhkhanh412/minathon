@@ -25,19 +25,11 @@ class RegisScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              // Image(
-              //   image: AssetImage("images/logo.png"),
-              //   width: 390,
-              //   height: 250,
-              //   alignment: Alignment.center,
-              // ),
+              Image(
+                  image: NetworkImage(
+                      'https://firebasestorage.googleapis.com/v0/b/minathon-ec172.appspot.com/o/logo.png?alt=media&token=cbb56374-d04e-4e3a-9c22-325a4fc47675')),
               SizedBox(
                 height: 20,
-              ),
-              Text(
-                "Register NOW!!!",
-                style: TextStyle(fontSize: 24, fontFamily: "Brand Bold"),
-                textAlign: TextAlign.center,
               ),
               Padding(
                 padding: EdgeInsets.all(20),

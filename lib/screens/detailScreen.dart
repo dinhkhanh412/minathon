@@ -46,6 +46,16 @@ class _DetailScreenState extends State<DetailScreen> {
     }
   }
 
+  void clickDisLikeButton() {
+    if (widget.UID == null)
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    else {
+      setState(() {
+        widget.dislike = widget.dislike + 1;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,8 +83,8 @@ class _DetailScreenState extends State<DetailScreen> {
                       icon: const Icon(Icons.clear, size: 40),
                       color: HexColor("#0081a7"),
                       onPressed: () {
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => HomeScreen(UID: widget.UID)));
                       },
                     ),
                   ),
@@ -163,13 +173,15 @@ class _DetailScreenState extends State<DetailScreen> {
                   alignment: Alignment.bottomRight,
                   child: Row(children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.55,
+                      width: MediaQuery.of(context).size.width * 0.50,
                     ),
                     Text(widget.dislike.toString()),
                     IconButton(
                       icon: const Icon(Icons.thumb_down),
                       color: HexColor("#0081a7"),
-                      onPressed: () {},
+                      onPressed: () {
+                        clickDisLikeButton();
+                      },
                     ),
                   ]),
                 ),
