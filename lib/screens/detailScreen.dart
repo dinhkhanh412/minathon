@@ -18,14 +18,17 @@ class DetailScreen extends StatelessWidget {
   final String coverImg;
   final imageLink;
   final int vote;
-  DetailScreen({
-    this.name,
-    this.descript,
-    this.trendID,
-    this.coverImg,
-    this.imageLink,
-    this.vote,
-  });
+  final int like;
+  final int dislike;
+  DetailScreen(
+      {this.name,
+      this.descript,
+      this.trendID,
+      this.coverImg,
+      this.imageLink,
+      this.vote,
+      this.like,
+      this.dislike});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,11 +89,11 @@ class DetailScreen extends StatelessWidget {
                   animation: true,
                   lineHeight: 20.0,
                   animationDuration: 2000,
-                  percent: 90 / (90 + 20),
+                  percent: like / (like + dislike),
                   leading: new Text("Rate:   ",
                       style: TextStyle(
                           color: HexColor("#0466c8"), fontSize: 16, fontWeight: FontWeight.bold)),
-                  center: Text("90.0%",
+                  center: Text((like / (like + dislike) * 100).toStringAsFixed(2),
                       style: TextStyle(
                           color: HexColor("#1d3557"), fontSize: 16, fontWeight: FontWeight.bold)),
                   linearStrokeCap: LinearStrokeCap.roundAll,
@@ -127,19 +130,28 @@ class DetailScreen extends StatelessWidget {
               children: <Widget>[
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.thumb_down),
-                    color: HexColor("#0081a7"),
-                    onPressed: () {},
-                  ),
+                  child: Row(children: [
+                    IconButton(
+                      icon: const Icon(Icons.thumb_up),
+                      color: HexColor("#0081a7"),
+                      onPressed: () {},
+                    ),
+                    Text(like.toString()),
+                  ]),
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: IconButton(
-                    icon: const Icon(Icons.thumb_up),
-                    color: HexColor("#0081a7"),
-                    onPressed: () {},
-                  ),
+                  child: Row(children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.55,
+                    ),
+                    Text(dislike.toString()),
+                    IconButton(
+                      icon: const Icon(Icons.thumb_down),
+                      color: HexColor("#0081a7"),
+                      onPressed: () {},
+                    ),
+                  ]),
                 ),
               ],
             )),

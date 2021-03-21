@@ -134,12 +134,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DetailScreen(
-                                    name: snapshot.value['name'],
-                                    descript: snapshot.value['descript'],
-                                    trendID: snapshot.value['trendID'],
-                                    coverImg: snapshot.value['coverImg'],
-                                    imageLink: snapshot.value['imageLink'],
-                                    vote: snapshot.value['vote'])));
+                                      name: snapshot.value['name'],
+                                      descript: snapshot.value['descript'],
+                                      trendID: snapshot.value['trendID'],
+                                      coverImg: snapshot.value['coverImg'],
+                                      imageLink: snapshot.value['imageLink'],
+                                      vote: snapshot.value['vote'],
+                                      like: snapshot.value['like'],
+                                      dislike: snapshot.value['dislike'],
+                                    )));
                       },
                       child: InfoCard(
                           name: snapshot.value['name'],
